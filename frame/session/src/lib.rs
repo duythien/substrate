@@ -466,36 +466,44 @@ pub mod pallet {
 					);
 					self.keys.iter().map(|x| x.1.clone()).collect()
 				});
-			assert!(
-				!initial_validators_0.is_empty(),
-				"Empty validator set for session 0 in genesis block!"
-			);
+
+			log::info!("--------- {:?}", initial_validators_0);
+			// assert!(
+			// 	!initial_validators_0.is_empty(),
+			// 	"Empty validator set for session 0 in genesis block!"
+			// );
 
 			let initial_validators_1 = T::SessionManager::new_session_genesis(1)
 				.unwrap_or_else(|| initial_validators_0.clone());
-			assert!(
-				!initial_validators_1.is_empty(),
-				"Empty validator set for session 1 in genesis block!"
-			);
+			// assert!(
+			// 	!initial_validators_1.is_empty(),
+			// 	"Empty validator set for session 1 in genesis block!"
+			// );
 
-			let queued_keys: Vec<_> = initial_validators_1
-				.iter()
-				.cloned()
-				.map(|v| {
-					(
-						v.clone(),
-						Pallet::<T>::load_keys(&v).expect("Validator in session 1 missing keys!"),
-					)
-				})
-				.collect();
+			if !initial_validators_1.is_empty() {
+				let queued_keys: Vec<_> = initial_validators_1
+					.iter()
+					.cloned()
+					.map(|v| {
+						(
+							v.clone(),
+							Pallet::<T>::load_keys(&v)
+								.expect("Validator in session 1 missing keys!"),
+						)
+					})
+					.collect();
 
-			// Tell everyone about the genesis session keys
-			T::SessionHandler::on_genesis_session::<T::Keys>(&queued_keys);
+				// Tell everyone about the genesis session keys
+				T::SessionHandler::on_genesis_session::<T::Keys>(&queued_keys);
 
-			Validators::<T>::put(initial_validators_0);
-			<QueuedKeys<T>>::put(queued_keys);
+				<QueuedKeys<T>>::put(queued_keys);
+			}
 
-			T::SessionManager::start_session(0);
+			if !initial_validators_0.is_empty() {
+				Validators::<T>::put(initial_validators_0);
+
+				T::SessionManager::start_session(0);
+			}
 		}
 	}
 
@@ -681,7 +689,7 @@ impl<T: Config> Pallet<T> {
 			let mut now_session_keys = session_keys.iter();
 			let mut check_next_changed = |keys: &T::Keys| {
 				if changed {
-					return
+					return;
 				}
 				// since a new validator set always leads to `changed` starting
 				// as true, we can ensure that `now_session_keys` and `next_validators`
@@ -717,14 +725,14 @@ impl<T: Config> Pallet<T> {
 	/// Disable the validator of index `i`, returns `false` if the validator was already disabled.
 	pub fn disable_index(i: u32) -> bool {
 		if i >= Validators::<T>::decode_len().unwrap_or(0) as u32 {
-			return false
+			return false;
 		}
 
 		<DisabledValidators<T>>::mutate(|disabled| {
 			if let Err(index) = disabled.binary_search(&i) {
 				disabled.insert(index, i);
 				T::SessionHandler::on_disabled(i);
-				return true
+				return true;
 			}
 
 			false
@@ -839,7 +847,7 @@ impl<T: Config> Pallet<T> {
 
 			if let Some(old) = old_keys.as_ref().map(|k| k.get_raw(*id)) {
 				if key == old {
-					continue
+					continue;
 				}
 
 				Self::clear_key_owner(*id, old);
