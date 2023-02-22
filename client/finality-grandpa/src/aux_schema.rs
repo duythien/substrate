@@ -210,7 +210,7 @@ where
 
 		backend.insert_aux(&[(SET_STATE_KEY, set_state.encode().as_slice())], &[])?;
 
-		return Ok(Some((new_set, set_state)))
+		return Ok(Some((new_set, set_state)));
 	}
 
 	Ok(None)
@@ -274,7 +274,7 @@ where
 
 		backend.insert_aux(&[(SET_STATE_KEY, set_state.encode().as_slice())], &[])?;
 
-		return Ok(Some((set, set_state)))
+		return Ok(Some((set, set_state)));
 	}
 
 	Ok(None)
@@ -307,7 +307,7 @@ where
 			},
 		};
 
-		return Ok(Some((new_set, set_state)))
+		return Ok(Some((new_set, set_state)));
 	}
 
 	Ok(None)
@@ -336,7 +336,7 @@ where
 				return Ok(PersistentData {
 					authority_set: new_set.into(),
 					set_state: set_state.into(),
-				})
+				});
 			}
 		},
 		Some(1) => {
@@ -346,7 +346,7 @@ where
 				return Ok(PersistentData {
 					authority_set: new_set.into(),
 					set_state: set_state.into(),
-				})
+				});
 			}
 		},
 		Some(2) => {
@@ -356,7 +356,7 @@ where
 				return Ok(PersistentData {
 					authority_set: new_set.into(),
 					set_state: set_state.into(),
-				})
+				});
 			}
 		},
 		Some(3) => {
@@ -376,11 +376,18 @@ where
 						},
 					};
 
-				return Ok(PersistentData { authority_set: set.into(), set_state: set_state.into() })
+				return Ok(PersistentData {
+					authority_set: set.into(),
+					set_state: set_state.into(),
+				});
 			}
 		},
-		Some(other) =>
-			return Err(ClientError::Backend(format!("Unsupported GRANDPA DB version: {:?}", other))),
+		Some(other) => {
+			return Err(ClientError::Backend(format!(
+				"Unsupported GRANDPA DB version: {:?}",
+				other
+			)))
+		},
 	}
 
 	// genesis.
@@ -388,24 +395,24 @@ where
 		from genesis on what appears to be first startup.");
 
 	let genesis_authorities = genesis_authorities()?;
-	let genesis_set = AuthoritySet::genesis(genesis_authorities)
-		.expect("genesis authorities is non-empty; all weights are non-zero; qed.");
-	let state = make_genesis_round();
-	let base = state
-		.prevote_ghost
-		.expect("state is for completed round; completed rounds must have a prevote ghost; qed.");
+	// let genesis_set = AuthoritySet::genesis(genesis_authorities)
+	// 	.expect("genesis authorities is non-empty; all weights are non-zero; qed.");
+	// let state = make_genesis_round();
+	// let base = state
+	// 	.prevote_ghost
+	// 	.expect("state is for completed round; completed rounds must have a prevote ghost; qed.");
 
-	let genesis_state = VoterSetState::live(0, &genesis_set, base);
+	// let genesis_state = VoterSetState::live(0, &genesis_set, base);
 
-	backend.insert_aux(
-		&[
-			(AUTHORITY_SET_KEY, genesis_set.encode().as_slice()),
-			(SET_STATE_KEY, genesis_state.encode().as_slice()),
-		],
-		&[],
-	)?;
+	// backend.insert_aux(
+	// 	&[
+	// 		(AUTHORITY_SET_KEY, genesis_set.encode().as_slice()),
+	// 		(SET_STATE_KEY, genesis_state.encode().as_slice()),
+	// 	],
+	// 	&[],
+	// )?;
 
-	Ok(PersistentData { authority_set: genesis_set.into(), set_state: genesis_state.into() })
+	//Ok(PersistentData { authority_set: genesis_set.into(), set_state: genesis_state.into() })
 }
 
 /// Update the authority set on disk after a change.
