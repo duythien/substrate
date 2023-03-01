@@ -395,24 +395,24 @@ where
 		from genesis on what appears to be first startup.");
 
 	let genesis_authorities = genesis_authorities()?;
-	// let genesis_set = AuthoritySet::genesis(genesis_authorities)
-	// 	.expect("genesis authorities is non-empty; all weights are non-zero; qed.");
-	// let state = make_genesis_round();
-	// let base = state
-	// 	.prevote_ghost
-	// 	.expect("state is for completed round; completed rounds must have a prevote ghost; qed.");
+	let genesis_set = AuthoritySet::genesis(genesis_authorities)
+		.expect("genesis authorities is non-empty; all weights are non-zero; qed.");
+	let state = make_genesis_round();
+	let base = state
+		.prevote_ghost
+		.expect("state is for completed round; completed rounds must have a prevote ghost; qed.");
 
-	// let genesis_state = VoterSetState::live(0, &genesis_set, base);
+	let genesis_state = VoterSetState::live(0, &genesis_set, base);
 
-	// backend.insert_aux(
-	// 	&[
-	// 		(AUTHORITY_SET_KEY, genesis_set.encode().as_slice()),
-	// 		(SET_STATE_KEY, genesis_state.encode().as_slice()),
-	// 	],
-	// 	&[],
-	// )?;
+	backend.insert_aux(
+		&[
+			(AUTHORITY_SET_KEY, genesis_set.encode().as_slice()),
+			(SET_STATE_KEY, genesis_state.encode().as_slice()),
+		],
+		&[],
+	)?;
 
-	//Ok(PersistentData { authority_set: genesis_set.into(), set_state: genesis_state.into() })
+	Ok(PersistentData { authority_set: genesis_set.into(), set_state: genesis_state.into() })
 }
 
 /// Update the authority set on disk after a change.
