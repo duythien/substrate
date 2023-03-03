@@ -116,7 +116,7 @@ where
 			Some(s) => s,
 			None => {
 				let v = Vec::new();
-				VoterSet::new(v.clone()).expect("nonempty")
+				VoterSet::new(v.clone()).unwrap()
 			},
 		}
 	}
