@@ -2032,6 +2032,21 @@ dependencies = [
  "num-traits",
  "parity-scale-codec",
  "parking_lot 0.12.0",
+ "scale-info",
+]
+
+[[package]]
+name = "finality-grandpa"
+version = "0.16.0"
+source = "git+https://github.com/duythien/finality-grandpa.git?branch=0.16.0#93ca5f3377942c60eb0272caf967553c1b5e6238"
+dependencies = [
+ "either",
+ "futures",
+ "futures-timer",
+ "log",
+ "num-traits",
+ "parity-scale-codec",
+ "parking_lot 0.12.0",
  "rand 0.8.4",
  "scale-info",
 ]
@@ -5751,7 +5766,7 @@ dependencies = [
 name = "pallet-grandpa"
 version = "4.0.0-dev"
 dependencies = [
- "finality-grandpa",
+ "finality-grandpa 0.16.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "frame-benchmarking",
  "frame-election-provider-support",
  "frame-support",
@@ -8484,7 +8499,7 @@ dependencies = [
  "assert_matches",
  "async-trait",
  "dyn-clone",
- "finality-grandpa",
+ "finality-grandpa 0.16.0 (git+https://github.com/duythien/finality-grandpa.git?branch=0.16.0)",
  "fork-tree",
  "futures",
  "futures-timer",
@@ -8527,7 +8542,7 @@ dependencies = [
 name = "sc-finality-grandpa-rpc"
 version = "0.10.0-dev"
 dependencies = [
- "finality-grandpa",
+ "finality-grandpa 0.16.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures",
  "jsonrpsee",
  "log",
@@ -9952,7 +9967,7 @@ dependencies = [
 name = "sp-finality-grandpa"
 version = "4.0.0-dev"
 dependencies = [
- "finality-grandpa",
+ "finality-grandpa 0.16.0 (git+https://github.com/duythien/finality-grandpa.git?branch=0.16.0)",
  "log",
  "parity-scale-codec",
  "scale-info",
@@ -11340,9 +11355,9 @@ version = "1.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4ee73e6e4924fe940354b8d4d98cad5231175d615cd855b758adc658c0aac6a0"
 dependencies = [
- "cfg-if 1.0.0",
+ "cfg-if 0.1.10",
  "digest 0.10.3",
- "rand 0.8.4",
+ "rand 0.6.5",
  "static_assertions",
 ]
 
