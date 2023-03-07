@@ -2038,7 +2038,7 @@ dependencies = [
 [[package]]
 name = "finality-grandpa"
 version = "0.16.0"
-source = "git+https://github.com/duythien/finality-grandpa.git?branch=0.16.0#93ca5f3377942c60eb0272caf967553c1b5e6238"
+source = "git+https://github.com/duythien/finality-grandpa.git?branch=0.16.0#6297855428055a7213a30bfbfcb324c2323b7b18"
 dependencies = [
  "either",
  "futures",
@@ -5766,7 +5766,7 @@ dependencies = [
 name = "pallet-grandpa"
 version = "4.0.0-dev"
 dependencies = [
- "finality-grandpa 0.16.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "finality-grandpa 0.16.0 (git+https://github.com/duythien/finality-grandpa.git?branch=0.16.0)",
  "frame-benchmarking",
  "frame-election-provider-support",
  "frame-support",
