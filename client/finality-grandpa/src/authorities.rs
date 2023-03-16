@@ -110,16 +110,17 @@ where
 
 	/// Get the current authorities and their weights (for the current set ID).
 	pub fn current_authorities(&self) -> VoterSet<AuthorityId> {
-		VoterSet::new(self.inner().current_authorities.iter().cloned()).expect("Voter empty")
-		// let a = VoterSet::new(self.inner().current_authorities.iter().cloned());
-		// match a {
-		// 	Some(s) => s,
-		// 	None => {
-		// 		let v = Vec::new();
-		// 		//let total_weight = VoterWeight::new(123456789).expect("voters nonempty;");
-		// 		//VoterSet { voters: vec![], total_weight: 123456789, threshold: 123456789 }
-		// 	},
-		// }
+		//VoterSet::new(self.inner().current_authorities.iter().cloned()).expect("Voter empty")
+		let a = VoterSet::new(self.inner().current_authorities.iter().cloned());
+		match a {
+			Some(s) => s,
+			None => {
+				let v = Vec::new();
+				VoterSet::new(v).unwrap()
+				//let total_weight = VoterWeight::new(123456789).expect("voters nonempty;");
+				//VoterSet { voters: vec![], total_weight: 123456789, threshold: 123456789 }
+			},
+		}
 	}
 
 	/// Clone the inner `AuthoritySet`.

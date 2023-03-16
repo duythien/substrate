@@ -2038,7 +2038,7 @@ dependencies = [
 [[package]]
 name = "finality-grandpa"
 version = "0.16.0"
-source = "git+https://github.com/duythien/finality-grandpa.git?branch=0.16.0#6297855428055a7213a30bfbfcb324c2323b7b18"
+source = "git+https://github.com/duythien/finality-grandpa.git?branch=0.16.0#e7e5c1c62f1c34d01249ec5663d41c263a8c3102"
 dependencies = [
  "either",
  "futures",
@@ -2047,7 +2047,6 @@ dependencies = [
  "num-traits",
  "parity-scale-codec",
  "parking_lot 0.12.0",
- "rand 0.8.4",
  "scale-info",
 ]
 
